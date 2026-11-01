@@ -11,7 +11,7 @@ I play a game called DDNet, specifically, a mod named "King of Gores". The websi
 
 This program allows users to input maps they have completed. The maps are stored in a text file, and a pandas dataframe is created using that file. Users can then perform actions such as printing out the maps they have completed or printing out how many total maps and points they have.
 
-![System diagram](docs/KoG_Tracker_Flowchart.drawio.png)
+![System diagram](KoG_Tracker_Flowchart.drawio.png)
 
 ## Tech Stack
 
