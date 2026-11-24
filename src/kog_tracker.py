@@ -9,3 +9,15 @@ print("2. View every map you have completed")
 print("3. View your total maps and points")
 print("4. Exit the program")
 
+# Basic decision tree to handle user input based on the options provided. 
+option = input("Enter your option (1-4): ")
+while option != "4":
+    if option == "1":
+        pass
+    elif option == "2":
+        pass
+    elif option == "3":
+        pass
+    else:
+        print("Invalid option. Please enter a number between 1 and 4.")
+    option = input("Enter your option (1-4): ")
