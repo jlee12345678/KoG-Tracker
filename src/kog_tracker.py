@@ -18,17 +18,14 @@ map_difficulties = ["Easy", "Medium", "Hard", "Insane", "Extreme"]
 def obtain_map_info():
     map_name = input("Enter the name of the map you completed: ")
     points = input("Enter the points you earned for this map: ")
-    # Checks to see if the input is a number (points can only be a number).
     while not points.isdigit():
         print("Invalid number of points. Please enter a number.")
         points = input("Enter the points you earned for this map: ")
     difficulty = input("Enter the difficulty of the map (Easy, Medium, Hard, Insane, Extreme): ")
-    # Checks to see if the input is a valid map difficulty.
     while difficulty not in map_difficulties:
         print("Invalid difficulty. Please enter one of the following: Easy, Medium, Hard, Insane, Extreme.")
         difficulty = input("Enter the difficulty of the map (Easy, Medium, Hard, Insane, Extreme): ")
     sub_difficulty = input("Enter the number of stars that the map has (1-3): ")
-    # Checks to see if the input is a valid number of stars.
     while sub_difficulty not in ["1", "2", "3"]:
         print("Invalid number of stars. Please enter a number between 1 and 3.")
         sub_difficulty = input("Enter the number of stars that the map has (1-3): ")
