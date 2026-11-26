@@ -10,10 +10,8 @@ print("2. View every map you have completed")
 print("3. View your total maps and points")
 print("4. Exit the program")
 
-# Creates a dataframe from the map_completions.csv file, which contains information about the maps the user has completed.
-maps_df = pd.read_csv("map_completions.csv", names=["Map Name", "Points", "Difficulty", "Sub-Difficulty", "Date Completed"])
 # A list of valid map difficulties.
-map_difficulties = ["Easy", "Medium", "Hard", "Insane", "Extreme"]
+map_difficulties = ["Easy", "Main", "Hard", "Insane", "Extreme"]
 
 # This function gets the necessary information about a map from the user and sanitizes those inputs.
 def obtain_map_info():
@@ -22,10 +20,10 @@ def obtain_map_info():
     while not points.isdigit():
         print("Invalid number of points. Please enter a number.")
         points = input("Enter the points you earned for this map: ")
-    difficulty = input("Enter the difficulty of the map (Easy, Medium, Hard, Insane, Extreme): ")
+    difficulty = input("Enter the difficulty of the map (Easy, Main, Hard, Insane, Extreme): ")
     while difficulty not in map_difficulties:
-        print("Invalid difficulty. Please enter one of the following: Easy, Medium, Hard, Insane, Extreme.")
-        difficulty = input("Enter the difficulty of the map (Easy, Medium, Hard, Insane, Extreme): ")
+        print("Invalid difficulty. Please enter one of the following: Easy, Main, Hard, Insane, Extreme.")
+        difficulty = input("Enter the difficulty of the map (Easy, Main, Hard, Insane, Extreme): ")
     sub_difficulty = input("Enter the number of stars that the map has (1-3): ")
     while sub_difficulty not in ["1", "2", "3"]:
         print("Invalid number of stars. Please enter a number between 1 and 3.")
@@ -45,13 +43,32 @@ def obtain_map_info():
             date_completed = input("Enter the date you completed the map (MM/DD/YYYY): ")
     return map_name, points, difficulty, sub_difficulty, date_completed
 
+# This function allows the user to add a new map completion to the CSV file.
+def add_map_completion():
+    with open ("src/maps.csv", "a") as f:
+        map_name, points, difficulty, sub_difficulty, date_completed = obtain_map_info()
+        print(f"Map Name: {map_name}, Points: {points}, Difficulty: {difficulty}, Sub-Difficulty: {sub_difficulty}, Date Completed: {date_completed}")
+        # Confirms with the user that the information they entered is correct before adding it to the dataframe.
+        print("Is this information correct? (y = yes, anything else = no)")
+        correct = input().lower()
+        if correct == "y":
+            # Adds the new map completion to the map_completions.csv file.
+            f.write(f"\n{map_name},{points},{difficulty},{sub_difficulty},{date_completed}")
+            print("Map added successfully!")
+        else:
+            print("Map not added.")
+    f.close()
+
 # Basic decision tree to handle user input based on the options provided. 
 option = input("Enter your option (1-4): ")
 while option != "4":
+    # Creates a dataframe from the map_completions.csv file, which contains information about the maps the user has completed.
+    maps_df = pd.read_csv("src/maps.csv", names=["Name", "Points", "Difficulty", "Sub-Difficulty", "Date"], sep=",", header=0)
+    maps_df["Date"] = maps_df["Date"].replace(np.nan, "Date not specified")
     if option == "1":
-        pass
+        add_map_completion()
     elif option == "2":
-        pass
+        print(maps_df)
     elif option == "3":
         pass
     else:
