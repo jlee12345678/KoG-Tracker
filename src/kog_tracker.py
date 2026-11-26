@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 
 # Displays basic information about the program and the options available to the user.
 print("This is a tracker for the KoG mod for DDNet. It tracks your map completions.")
@@ -29,8 +30,12 @@ def obtain_map_info():
     while sub_difficulty not in ["1", "2", "3"]:
         print("Invalid number of stars. Please enter a number between 1 and 3.")
         sub_difficulty = input("Enter the number of stars that the map has (1-3): ")
-    date_completed = input("Enter the date you completed the map (MM/DD/YYYY): ")
+    date_completed = input("Enter the date you completed the map (MM/DD/YYYY) or N/A: ")
     while True:
+        # Option to enter N/A (not everyone can remember the date they completed a map).
+        if date_completed == "N/A":
+            date_completed = np.nan
+            break
         # Attemps to convert the date input into a datetime object to make sure it is in the correct format. 
         try:
             pd.to_datetime(date_completed, format="%m/%d/%Y")
