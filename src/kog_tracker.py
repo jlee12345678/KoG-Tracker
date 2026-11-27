@@ -70,7 +70,9 @@ while option != "4":
     elif option == "2":
         print(maps_df)
     elif option == "3":
-        pass
+        maps = len(maps_df)
+        points = maps_df["Points"].sum()
+        print(f"You have completed {maps} maps and earned a total of {points} points.")
     else:
         print("Invalid option. Please enter a number between 1 and 4.")
     option = input("Enter your option (1-4): ")
