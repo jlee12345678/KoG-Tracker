@@ -8,8 +8,9 @@ print("Enter an option below:")
 print("1. Track a new map completion")
 print("2. View every map you have completed")
 print("3. View your total maps and points")
-print("4. View the date that you completed the first map of a certain difficulty.")
-print("5. Exit the program")
+print("4. View the date that you completed the first map of a certain difficulty")
+print("5. View the number of maps completed and points earned in the past 7 days")
+print("6. Exit the program")
 
 # A list of valid map difficulties.
 map_difficulties = ["Easy", "Main", "Hard", "Insane", "Extreme"]
@@ -78,9 +79,26 @@ def view_first_difficulty_completion_date():
         else:
             print(f"You completed your first {difficulty} map on {first_map['Date']}.")
 
+# This function allows the user to view the number of maps completed and points earned in the past 7 days.
+def view_weekly_stats():
+    current_date = pd.to_datetime("today")
+    # Normalize to remove the time component
+    current_date = current_date.normalize()  
+    seven_days_ago = current_date - pd.Timedelta(days=7)
+    print(current_date, seven_days_ago)
+    # Filters the dataframe to only include maps completed in the past 7 days.
+    filtered_df = maps_df[maps_df["Date"] != "Date not specified"]
+    filtered_df = filtered_df[pd.to_datetime(filtered_df["Date"], format="%m/%d/%Y") >= seven_days_ago]
+    if filtered_df.empty:
+        print("You have not completed any maps in the past 7 days.")
+    else:
+        maps = len(filtered_df)
+        points = filtered_df["Points"].sum()
+        print(f"You have completed {maps} maps and earned a total of {points} points in the past 7 days.")
+
 # Basic decision tree to handle user input based on the options provided. 
-option = input("Enter your option (1-5): ")
-while option != "5":
+option = input("Enter your option (1-6): ")
+while option != "6":
     # Creates a dataframe from the map_completions.csv file, which contains information about the maps the user has completed.
     maps_df = pd.read_csv("src/maps.csv", names=["Name", "Points", "Difficulty", "Sub-Difficulty", "Date"], sep=",", header=0)
     maps_df["Date"] = maps_df["Date"].replace(np.nan, "Date not specified")
@@ -94,6 +112,8 @@ while option != "5":
         print(f"You have completed {maps} maps and earned a total of {points} points.")
     elif option == "4":
         view_first_difficulty_completion_date()
+    elif option == "5":
+        view_weekly_stats()
     else:
-        print("Invalid option. Please enter a number between 1 and 5.")
-    option = input("Enter your option (1-5): ")
+        print("Invalid option. Please enter a number between 1 and 6.")
+    option = input("Enter your option (1-6): ")
