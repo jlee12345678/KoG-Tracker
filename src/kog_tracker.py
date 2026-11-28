@@ -8,7 +8,8 @@ print("Enter an option below:")
 print("1. Track a new map completion")
 print("2. View every map you have completed")
 print("3. View your total maps and points")
-print("4. Exit the program")
+print("4. View the date that you completed the first map of a certain difficulty.")
+print("5. Exit the program")
 
 # A list of valid map difficulties.
 map_difficulties = ["Easy", "Main", "Hard", "Insane", "Extreme"]
@@ -59,9 +60,27 @@ def add_map_completion():
             print("Map not added.")
     f.close()
 
+# This function allows the user to view the date that they completed the first map of a certain difficulty.
+def view_first_difficulty_completion_date():
+    difficulty = input("Enter the difficulty you want to view (Easy, Main, Hard, Insane, Extreme): ")
+    while difficulty not in map_difficulties:
+        print("Invalid difficulty. Please enter one of the following: Easy, Main, Hard, Insane, Extreme.")
+        difficulty = input("Enter the difficulty you want to view (Easy, Main, Hard, Insane, Extreme): ")
+    # Filters the dataframe to only include maps of the specified difficulty.
+    filtered_df = maps_df[maps_df["Difficulty"] == difficulty]
+    if filtered_df.empty:
+        print(f"You have not completed any {difficulty} difficulty maps.")
+    else:
+        # Sorts the filtered dataframe by date and gets the first row (the earliest date).
+        first_map = filtered_df.sort_values(by="Date").iloc[0]
+        if (first_map["Date"] == "Date not specified"):
+            print(f"You completed at least one {difficulty} map, but you didn't specify the date(s).")
+        else:
+            print(f"You completed your first {difficulty} map on {first_map['Date']}.")
+
 # Basic decision tree to handle user input based on the options provided. 
-option = input("Enter your option (1-4): ")
-while option != "4":
+option = input("Enter your option (1-5): ")
+while option != "5":
     # Creates a dataframe from the map_completions.csv file, which contains information about the maps the user has completed.
     maps_df = pd.read_csv("src/maps.csv", names=["Name", "Points", "Difficulty", "Sub-Difficulty", "Date"], sep=",", header=0)
     maps_df["Date"] = maps_df["Date"].replace(np.nan, "Date not specified")
@@ -73,6 +92,8 @@ while option != "4":
         maps = len(maps_df)
         points = maps_df["Points"].sum()
         print(f"You have completed {maps} maps and earned a total of {points} points.")
+    elif option == "4":
+        view_first_difficulty_completion_date()
     else:
         print("Invalid option. Please enter a number between 1 and 4.")
-    option = input("Enter your option (1-4): ")
+    option = input("Enter your option (1-5): ")
