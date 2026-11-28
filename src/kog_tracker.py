@@ -95,5 +95,5 @@ while option != "5":
     elif option == "4":
         view_first_difficulty_completion_date()
     else:
-        print("Invalid option. Please enter a number between 1 and 4.")
+        print("Invalid option. Please enter a number between 1 and 5.")
     option = input("Enter your option (1-5): ")
