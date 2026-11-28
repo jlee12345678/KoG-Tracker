@@ -85,7 +85,6 @@ def view_weekly_stats():
     # Normalize to remove the time component
     current_date = current_date.normalize()  
     seven_days_ago = current_date - pd.Timedelta(days=7)
-    print(current_date, seven_days_ago)
     # Filters the dataframe to only include maps completed in the past 7 days.
     filtered_df = maps_df[maps_df["Date"] != "Date not specified"]
     filtered_df = filtered_df[pd.to_datetime(filtered_df["Date"], format="%m/%d/%Y") >= seven_days_ago]

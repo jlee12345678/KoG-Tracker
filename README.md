@@ -16,11 +16,11 @@ This program allows users to input maps they have completed. The maps are stored
 ## Tech Stack
 
 - **Language:** Python
-- **Libraries:** pandas, NumPy, datetime
+- **Libraries:** pandas, numpy, datetime (used in pandas)
 
 ## Setup
 
-Note: You need to have python installed to run this program.
+Note: You need to have python and pandas installed to run this program.
 ```bash
 git clone https://github.com/jlee12345678/KoG-Tracker.git
 cd KoG_Tracker/src
@@ -31,12 +31,18 @@ cd KoG_Tracker/src
 ```bash
 py kog_tracker.py # Runs program
 ```
+**Example:**
+
+![Example program execution](example.png)
 
 ## Roadmap
 
-- Weekly stats (maps completed in a certain week)
-- Option to print out the hardest map difficulty that the user has completed
-- Option to print out what date the user completed their first map of a certain difficulty (easy, main, hard, insane, extreme)
+- [x] Weekly stats (maps completed in a certain week)
+- [ ] Option to print out the hardest map difficulty that the user has completed
+- [x] Option to print out what date the user completed their first map of a certain difficulty (easy, main, hard, insane, extreme)
+
+## Demo
+
 
 
 ## Author
