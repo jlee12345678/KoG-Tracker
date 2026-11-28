@@ -73,7 +73,7 @@ def view_first_difficulty_completion_date():
         print(f"You have not completed any {difficulty} difficulty maps.")
     else:
         # Sorts the filtered dataframe by date and gets the first row (the earliest date).
-        first_map = filtered_df.sort_values(by="Date").iloc[0]
+        first_map = filtered_df.sort_values(by="Date", key=pd.to_datetime).iloc[0]
         if (first_map["Date"] == "Date not specified"):
             print(f"You completed at least one {difficulty} map, but you didn't specify the date(s).")
         else:
